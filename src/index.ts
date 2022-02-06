@@ -7,8 +7,6 @@ config();
 
 const { TOKEN } = process.env;
 
-console.log(TOKEN);
-
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 

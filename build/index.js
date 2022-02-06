@@ -15,7 +15,6 @@ const discord_js_1 = require("discord.js");
 const commands_1 = require("./commands");
 (0, dotenv_1.config)();
 const { TOKEN } = process.env;
-console.log(TOKEN);
 // Create a new client instance
 const client = new discord_js_1.Client({ intents: [discord_js_1.Intents.FLAGS.GUILDS] });
 // When the client is ready, run this code (only once)

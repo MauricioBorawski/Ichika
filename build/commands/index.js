@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.respondInteraction = exports.commands = void 0;
+const GetNotesCommand_1 = require("./GetNotesCommand");
 // TypeGuards
 function isCommand(command) {
     return command === "new" || command === "register";
@@ -8,12 +9,12 @@ function isCommand(command) {
 exports.commands = [
     {
         name: "new",
-        description: "Creates a new note ✏."
+        description: "Creates a new note.",
     },
 ];
 const responses = {
     new: {
-        response: "Pong",
+        response: (0, GetNotesCommand_1.getNotes)(),
     },
     register: {
         response: "Pong x2",

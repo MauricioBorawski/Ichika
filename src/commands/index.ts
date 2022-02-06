@@ -1,4 +1,5 @@
 import { Interaction } from "discord.js";
+import { getNotes } from "./GetNotesCommand";
 
 export type Command = "new" | "register";
 
@@ -10,25 +11,24 @@ function isCommand(command: string): command is Command {
 export interface Commands {
   name: Command;
   description: string;
-  response: string;
+  response: any;
 }
 
 export const commands: Pick<Commands, "name" | "description">[] = [
-    {
-        name: "new",
-        description: "Creates a new note."
-    },
-]
+  {
+    name: "new",
+    description: "Creates a new note.",
+  },
+];
 
 const responses: Record<Command, Pick<Commands, "response">> = {
   new: {
-    response: "Pong",
+    response: getNotes(),
   },
   register: {
     response: "Pong x2",
   },
 };
-
 
 /**
  * Handles the interactions for the commands.
