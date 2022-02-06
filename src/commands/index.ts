@@ -1,11 +1,12 @@
 import { Interaction } from "discord.js";
 import { getNotes } from "./GetNotesCommand";
+import {} from "./CreateNoteCommand"
 
-export type Command = "new" | "register";
+export type Command = "notes" | "register";
 
 // TypeGuards
 function isCommand(command: string): command is Command {
-  return command === "new" || command === "register";
+  return command === "notes" || command === "register";
 }
 
 export interface Commands {
@@ -14,15 +15,10 @@ export interface Commands {
   response: any;
 }
 
-export const commands: Pick<Commands, "name" | "description">[] = [
-  {
-    name: "new",
-    description: "Creates a new note.",
-  },
-];
+export const commands: any[] = [];
 
 const responses: Record<Command, Pick<Commands, "response">> = {
-  new: {
+  notes: {
     response: getNotes(),
   },
   register: {

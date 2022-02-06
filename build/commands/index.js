@@ -4,16 +4,11 @@ exports.respondInteraction = exports.commands = void 0;
 const GetNotesCommand_1 = require("./GetNotesCommand");
 // TypeGuards
 function isCommand(command) {
-    return command === "new" || command === "register";
+    return command === "notes" || command === "register";
 }
-exports.commands = [
-    {
-        name: "new",
-        description: "Creates a new note.",
-    },
-];
+exports.commands = [];
 const responses = {
-    new: {
+    notes: {
         response: (0, GetNotesCommand_1.getNotes)(),
     },
     register: {

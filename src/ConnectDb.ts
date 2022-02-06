@@ -1,6 +1,22 @@
-import { readFileSync } from "fs";
-import { Note } from "./types"; 
+import { readFileSync, writeFileSync} from "fs";
+import { Note } from "./types";
 
 const db = readFileSync(__dirname + "/../db.json");
 
+const getDb = () => JSON.parse(db.toString());
+
 export const getNotesFromDb = (): Note[] => JSON.parse(db.toString()).notes;
+
+export const insertNoteIntoDb = (note: string) => {
+  const entireDb = getDb();
+  const allNotes = getNotesFromDb();
+
+  const newNote: Note = {
+    id: allNotes.length,
+    note: note,
+  };
+
+  entireDb.notes.push(newNote);
+
+  writeFileSync(__dirname + "/../db.json", JSON.stringify(entireDb));
+};

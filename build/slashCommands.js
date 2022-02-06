@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const rest_1 = require("@discordjs/rest");
 const v9_1 = require("discord-api-types/v9");
 const dotenv_1 = require("dotenv");
-const commands_1 = require("./commands");
+const CreateNoteCommand_1 = require("./commands/CreateNoteCommand");
 (0, dotenv_1.config)();
 const { CLIENT_ID, GUILD_ID, TOKEN } = process.env;
 const rest = new rest_1.REST({ version: "9" }).setToken(TOKEN || "");
@@ -20,7 +20,7 @@ const rest = new rest_1.REST({ version: "9" }).setToken(TOKEN || "");
     try {
         console.log("Started refreshing application (/) commands.");
         yield rest.put(v9_1.Routes.applicationGuildCommands(CLIENT_ID || "", GUILD_ID || ""), {
-            body: commands_1.commands,
+            body: [CreateNoteCommand_1.test.data.toJSON()],
         });
         console.log("Successfully reloaded application (/) commands.");
     }
