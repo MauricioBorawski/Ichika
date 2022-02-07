@@ -14,7 +14,7 @@ const getNotes = () => {
             const editedNote = `${i + 1}. ` + note;
             arr.push(editedNote);
         });
-        return arr.join("\r\n");
+        return arr.length >= 1 ? arr.join("\r\n") : "Please create a note.";
     };
     return { content: generateResponse(), ephemeral: true };
 };
