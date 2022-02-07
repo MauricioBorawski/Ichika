@@ -7,6 +7,8 @@ const getDb = () => JSON.parse(db.toString());
 const getNotesFromDb = () => JSON.parse(db.toString()).notes;
 exports.getNotesFromDb = getNotesFromDb;
 const insertNoteIntoDb = (note) => {
+    if (!note)
+        throw new Error("Hubo un error al cargar la nota");
     const entireDb = getDb();
     const allNotes = (0, exports.getNotesFromDb)();
     const newNote = {

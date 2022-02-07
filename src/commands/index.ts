@@ -1,12 +1,12 @@
-import { Interaction } from "discord.js";
+import { CommandInteractionOptionResolver, Interaction } from "discord.js";
 import { getNotes } from "./GetNotesCommand";
-import {} from "./CreateNoteCommand"
+import { createNote, createNoteCommand } from "./CreateNoteCommand";
 
-export type Command = "notes" | "register";
+export type Command = "notes" | "create";
 
 // TypeGuards
 function isCommand(command: string): command is Command {
-  return command === "notes" || command === "register";
+  return command === "notes" || command === "create";
 }
 
 export interface Commands {
@@ -15,16 +15,18 @@ export interface Commands {
   response: any;
 }
 
-export const commands: any[] = [];
+export const commands: any[] = [createNoteCommand.toJSON()];
 
-const responses: Record<Command, Pick<Commands, "response">> = {
+const responses: (
+  interaction: any
+) => Record<Command, Pick<Commands, "response">> = (interaction: any) => ({
   notes: {
     response: getNotes(),
   },
-  register: {
-    response: "Pong x2",
+  create: {
+    response: createNote(interaction),
   },
-};
+});
 
 /**
  * Handles the interactions for the commands.
@@ -36,5 +38,8 @@ export const respondInteraction = (interaction: Interaction) => {
 
   const { commandName } = interaction;
   if (isCommand(commandName))
-    interaction.reply(responses[commandName].response);
+    interaction.reply(
+      responses(interaction.options ? interaction.options : null)[commandName]
+        .response
+    );
 };

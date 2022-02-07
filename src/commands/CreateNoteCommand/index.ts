@@ -1,19 +1,18 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Interaction } from "discord.js";
+import { CommandInteractionOptionResolver } from "discord.js";
 import { insertNoteIntoDb } from "../../ConnectDb";
 
-export const createNote = () => {};
-
-const createNoteCommand = new SlashCommandBuilder()
+export const createNoteCommand = new SlashCommandBuilder()
   .setName("create")
-  .setDescription("creates a new note.")
+  .setDescription("Replies with Pong!")
   .addStringOption((option) =>
     option.setName("add_note").setDescription("note:").setRequired(true)
   );
 
-export const test = {
-  data: createNoteCommand,
-  async execute(interaction: Interaction) {
-    console.log("Funciono :v");
-  },
+export const createNote = (interaction: CommandInteractionOptionResolver) => {
+  const userInput = interaction.getString("add_note");
+
+  insertNoteIntoDb(userInput);
+
+  return { content: "Note created", ephemeral: true };
 };

@@ -2,19 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.respondInteraction = exports.commands = void 0;
 const GetNotesCommand_1 = require("./GetNotesCommand");
+const CreateNoteCommand_1 = require("./CreateNoteCommand");
 // TypeGuards
 function isCommand(command) {
-    return command === "notes" || command === "register";
+    return command === "notes" || command === "create";
 }
-exports.commands = [];
-const responses = {
+exports.commands = [CreateNoteCommand_1.createNoteCommand.toJSON()];
+const responses = (interaction) => ({
     notes: {
         response: (0, GetNotesCommand_1.getNotes)(),
     },
-    register: {
-        response: "Pong x2",
+    create: {
+        response: (0, CreateNoteCommand_1.createNote)(interaction),
     },
-};
+});
 /**
  * Handles the interactions for the commands.
  * @param interaction The interaction object that is received from Discord
@@ -25,6 +26,7 @@ const respondInteraction = (interaction) => {
         return;
     const { commandName } = interaction;
     if (isCommand(commandName))
-        interaction.reply(responses[commandName].response);
+        interaction.reply(responses(interaction.options ? interaction.options : null)[commandName]
+            .response);
 };
 exports.respondInteraction = respondInteraction;

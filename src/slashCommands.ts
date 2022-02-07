@@ -2,7 +2,6 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { config } from "dotenv";
 import { commands } from "./commands";
-import { test } from "./commands/CreateNoteCommand";
 
 config();
 
@@ -17,7 +16,7 @@ const rest = new REST({ version: "9" }).setToken(TOKEN || "");
     await rest.put(
       Routes.applicationGuildCommands(CLIENT_ID || "", GUILD_ID || ""),
       {
-        body: [test.data.toJSON()],
+        body: commands,
       }
     );
 

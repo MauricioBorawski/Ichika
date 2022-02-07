@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
 import { config } from "dotenv";
-import { Client ,Intents } from "discord.js";
+import { Client, Intents } from "discord.js";
 import { respondInteraction } from "./commands";
 
 config();
