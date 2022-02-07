@@ -2,9 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.insertNoteIntoDb = exports.getNotesFromDb = void 0;
 const fs_1 = require("fs");
-const db = (0, fs_1.readFileSync)(__dirname + "/../db.json");
+const dbPath = __dirname + "/../db.json";
+const db = (0, fs_1.readFileSync)(dbPath);
 const getDb = () => JSON.parse(db.toString());
-const getNotesFromDb = () => JSON.parse(db.toString()).notes;
+const getNotesFromDb = () => {
+    const dataBase = (0, fs_1.readFileSync)(dbPath);
+    return JSON.parse(dataBase.toString()).notes;
+};
 exports.getNotesFromDb = getNotesFromDb;
 const insertNoteIntoDb = (note) => {
     if (!note)

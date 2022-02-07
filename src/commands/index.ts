@@ -1,5 +1,5 @@
-import { CommandInteractionOptionResolver, Interaction } from "discord.js";
-import { getNotes } from "./GetNotesCommand";
+import { Interaction } from "discord.js";
+import { getNotes, getNoteCommand } from "./GetNotesCommand";
 import { createNote, createNoteCommand } from "./CreateNoteCommand";
 
 export type Command = "notes" | "create";
@@ -15,18 +15,19 @@ export interface Commands {
   response: any;
 }
 
-export const commands: any[] = [createNoteCommand.toJSON()];
+export const commands: any[] = [
+  getNoteCommand.toJSON(),
+  createNoteCommand.toJSON(),
+];
 
-const responses: (
-  interaction: any
-) => Record<Command, Pick<Commands, "response">> = (interaction: any) => ({
+const responses: Record<Command, Pick<Commands, "response">> = {
   notes: {
-    response: getNotes(),
+    response: () => getNotes(),
   },
   create: {
-    response: createNote(interaction),
+    response: createNote,
   },
-});
+};
 
 /**
  * Handles the interactions for the commands.
@@ -38,8 +39,5 @@ export const respondInteraction = (interaction: Interaction) => {
 
   const { commandName } = interaction;
   if (isCommand(commandName))
-    interaction.reply(
-      responses(interaction.options ? interaction.options : null)[commandName]
-        .response
-    );
+    interaction.reply(responses[commandName].response(interaction.options));
 };

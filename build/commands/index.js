@@ -7,15 +7,18 @@ const CreateNoteCommand_1 = require("./CreateNoteCommand");
 function isCommand(command) {
     return command === "notes" || command === "create";
 }
-exports.commands = [CreateNoteCommand_1.createNoteCommand.toJSON()];
-const responses = (interaction) => ({
+exports.commands = [
+    GetNotesCommand_1.getNoteCommand.toJSON(),
+    CreateNoteCommand_1.createNoteCommand.toJSON(),
+];
+const responses = {
     notes: {
-        response: (0, GetNotesCommand_1.getNotes)(),
+        response: () => (0, GetNotesCommand_1.getNotes)(),
     },
     create: {
-        response: (0, CreateNoteCommand_1.createNote)(interaction),
+        response: CreateNoteCommand_1.createNote,
     },
-});
+};
 /**
  * Handles the interactions for the commands.
  * @param interaction The interaction object that is received from Discord
@@ -26,7 +29,6 @@ const respondInteraction = (interaction) => {
         return;
     const { commandName } = interaction;
     if (isCommand(commandName))
-        interaction.reply(responses(interaction.options ? interaction.options : null)[commandName]
-            .response);
+        interaction.reply(responses[commandName].response(interaction.options));
 };
 exports.respondInteraction = respondInteraction;

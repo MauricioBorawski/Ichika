@@ -1,7 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNotes = void 0;
+exports.getNotes = exports.getNoteCommand = void 0;
+const builders_1 = require("@discordjs/builders");
 const ConnectDb_1 = require("../../ConnectDb");
+exports.getNoteCommand = new builders_1.SlashCommandBuilder()
+    .setName("notes")
+    .setDescription("Displays the list for all of your notes.");
 const getNotes = () => {
     const notes = (0, ConnectDb_1.getNotesFromDb)();
     const generateResponse = () => {

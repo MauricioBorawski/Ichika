@@ -4,7 +4,7 @@ import { insertNoteIntoDb } from "../../ConnectDb";
 
 export const createNoteCommand = new SlashCommandBuilder()
   .setName("create")
-  .setDescription("Replies with Pong!")
+  .setDescription("Create a new note.")
   .addStringOption((option) =>
     option.setName("add_note").setDescription("note:").setRequired(true)
   );

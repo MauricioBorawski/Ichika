@@ -5,7 +5,7 @@ const builders_1 = require("@discordjs/builders");
 const ConnectDb_1 = require("../../ConnectDb");
 exports.createNoteCommand = new builders_1.SlashCommandBuilder()
     .setName("create")
-    .setDescription("Replies with Pong!")
+    .setDescription("Create a new note.")
     .addStringOption((option) => option.setName("add_note").setDescription("note:").setRequired(true));
 const createNote = (interaction) => {
     const userInput = interaction.getString("add_note");
