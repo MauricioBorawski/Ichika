@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getNotes = exports.getNoteCommand = void 0;
 const builders_1 = require("@discordjs/builders");
-const ConnectDb_1 = require("../../ConnectDb");
+const DbActions_1 = require("../../DbActions");
 exports.getNoteCommand = new builders_1.SlashCommandBuilder()
     .setName("notes")
     .setDescription("Displays the list for all of your notes.");
 const getNotes = () => {
-    const notes = (0, ConnectDb_1.getNotesFromDb)();
+    const notes = (0, DbActions_1.getNotesFromDb)();
     const generateResponse = () => {
         const arr = [];
         notes.map(({ note }, i) => {
