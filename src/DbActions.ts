@@ -1,6 +1,5 @@
-import { Interaction } from "discord.js";
 import { readFileSync, writeFileSync } from "fs";
-import { Note, User } from "./types";
+import { Note, User, UserData } from "./types";
 
 const dbPath = __dirname + "/../db.json";
 
@@ -23,8 +22,9 @@ export const getUserList = () => {
 export const insertNoteIntoDb = (note: string | null) => {
   if (!note) throw new Error("Hubo un error al cargar la nota");
 
-  const entireDb = getDb();
-  const allNotes = getNotesFromDb();
+  const dataBase = readFileSync(dbPath);
+  const entireDb = JSON.parse(dataBase.toString());
+  const allNotes = JSON.parse(dataBase.toString()).notes;
 
   const newNote: Note = {
     id: allNotes.length,
@@ -36,17 +36,18 @@ export const insertNoteIntoDb = (note: string | null) => {
   writeFileSync(__dirname + "/../db.json", JSON.stringify(entireDb));
 };
 
-export const registerUser = (intereaction: Interaction) => {
-  if (!intereaction.isCommand()) return;
+export const inserUserIntoDb = (user: UserData | null) => {
+  if (!user) throw Error("Hubo un error al registrarte");
 
-  const entireDb = getDb();
-  const usersDb = getUserList();
+  const dataBase = readFileSync(dbPath);
+  const entireDb = JSON.parse(dataBase.toString());
+  const usersDb = JSON.parse(dataBase.toString()).users;
 
   const newUser: User = {
     id: usersDb.length as number,
-    userName: intereaction.user.username,
-    discordId: intereaction.user.id,
-    password: "",
+    userName: user.username,
+    discordId: user.discordId,
+    password: user.password,
   };
 
   entireDb.users.push(newUser);
