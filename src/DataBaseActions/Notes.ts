@@ -3,13 +3,15 @@ import { Note } from "@/types";
 
 export const dbPath = __dirname + "/../db.json";
 
-export const getNotesFromDb = (): Note[] => {
+export const getNotesFromDb = (userId?: string): Note[] => {
   const dataBase = readFileSync(dbPath);
 
-  return JSON.parse(dataBase.toString()).notes;
+  return JSON.parse(dataBase.toString()).notes.filter(
+    (id: Note) => id.userId === userId
+  );
 };
 
-export const insertNoteIntoDb = (note: string | null) => {
+export const insertNoteIntoDb = (note: Pick<Note, "note" | "userId">) => {
   if (!note) throw new Error("Hubo un error al cargar la nota");
 
   const dataBase = readFileSync(dbPath);
@@ -18,8 +20,8 @@ export const insertNoteIntoDb = (note: string | null) => {
 
   const newNote: Note = {
     id: allNotes.length,
-    note: note,
-    userId: "",
+    note: note.note,
+    userId: note.userId,
   };
 
   entireDb.notes.push(newNote);

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteractionOptionResolver } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import { inserUserIntoDb } from "../../DataBaseActions/Users";
 import { UserData, ApiResponse } from "@/types";
 
@@ -20,11 +20,11 @@ export const registerUserCommand = new SlashCommandBuilder()
   );
 
 export const registerCommand = (
-  interaction: CommandInteractionOptionResolver
+  interaction: CommandInteraction
 ): ApiResponse => {
-  const password = interaction.getString("password");
-  const username = interaction.getUser("username")?.username;
-  const discordId = interaction.getUser("username")?.id;
+  const password = interaction.options.getString("password");
+  const username = interaction.options.getUser("username")?.username;
+  const discordId = interaction.options.getUser("username")?.id;
 
   if (!password || !username || !discordId)
     throw Error("Hubo un error al cargar los datos");

@@ -1,13 +1,16 @@
 import { ApiResponse } from "@/types";
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
 import { getNotesFromDb } from "../../DataBaseActions/Notes";
 
 export const getNoteCommand = new SlashCommandBuilder()
   .setName("notes")
   .setDescription("Displays the list for all of your notes.");
 
-export const getNotes = (): ApiResponse => {
-  const notes = getNotesFromDb();
+export const getNotes = (interaction: CommandInteraction): ApiResponse => {
+  if (!interaction.member) throw Error("Unexpected error;");
+  
+  const notes = getNotesFromDb(interaction.member.user.id);
 
   const generateResponse = (): string => {
     const arr: string[] = [];

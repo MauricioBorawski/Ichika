@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteractionOptionResolver } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import { insertNoteIntoDb } from "../../DataBaseActions/Notes";
-import { ApiResponse } from "@/types";
+import { ApiResponse, Note } from "@/types";
 
 export const createNoteCommand = new SlashCommandBuilder()
   .setName("create")
@@ -10,10 +10,18 @@ export const createNoteCommand = new SlashCommandBuilder()
     option.setName("create").setDescription("note:").setRequired(true)
   );
 
-export const createNote = (interaction: CommandInteractionOptionResolver): ApiResponse => {
-  const userInput = interaction.getString("create");
+export const createNote = (interaction: CommandInteraction): ApiResponse => {
+  const userInput = interaction.options.getString("create");
+  const userId = interaction.member?.user.id;
 
-  insertNoteIntoDb(userInput);
+  if (!userInput || !userId) throw Error("There was an unexpeted error");
+
+  const generatedNote: Pick<Note, "note" | "userId"> = {
+    note: userInput,
+    userId: userId,
+  };
+
+  insertNoteIntoDb(generatedNote);
 
   return { content: "Note created", ephemeral: true };
 };

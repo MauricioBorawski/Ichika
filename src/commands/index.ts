@@ -24,7 +24,7 @@ export const commands: any[] = [
 
 const responses: Record<Command, Pick<Commands, "response">> = {
   notes: {
-    response: () => getNotes(),
+    response: getNotes,
   },
   create: {
     response: createNote,
@@ -43,6 +43,7 @@ export const respondInteraction = (interaction: Interaction) => {
   if (!interaction.isCommand()) return;
 
   const { commandName } = interaction;
+
   if (isCommand(commandName))
-    interaction.reply(responses[commandName].response(interaction.options));
+    interaction.reply(responses[commandName].response(interaction));
 };
