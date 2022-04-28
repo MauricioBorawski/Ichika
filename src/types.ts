@@ -1,6 +1,7 @@
 export interface Note {
   id: number;
   note: string;
+  userId: string;
 }
 
 export interface User {
@@ -16,4 +17,12 @@ export interface UserData {
   discordId: string;
 }
 
-export const dbPath = __dirname + "/../db.json";
+export interface DataBase {
+  notes: Note[];
+  users: User[];
+}
+
+export interface ApiResponse {
+  content: string;
+  ephemeral: boolean;
+}

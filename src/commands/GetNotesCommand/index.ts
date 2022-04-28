@@ -1,11 +1,12 @@
+import { ApiResponse } from "@/types";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { getNotesFromDb } from "@db/Notes";
+import { getNotesFromDb } from "../../DataBaseActions/Notes";
 
 export const getNoteCommand = new SlashCommandBuilder()
   .setName("notes")
   .setDescription("Displays the list for all of your notes.");
 
-export const getNotes = () => {
+export const getNotes = (): ApiResponse => {
   const notes = getNotesFromDb();
 
   const generateResponse = (): string => {

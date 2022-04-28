@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteractionOptionResolver } from "discord.js";
-import { inserUserIntoDb } from "@db/Users";
-import { UserData } from "@/types";
+import { inserUserIntoDb } from "../../DataBaseActions/Users";
+import { UserData, ApiResponse } from "@/types";
 
 export const registerUserCommand = new SlashCommandBuilder()
   .setName("register")
@@ -21,7 +21,7 @@ export const registerUserCommand = new SlashCommandBuilder()
 
 export const registerCommand = (
   interaction: CommandInteractionOptionResolver
-) => {
+): ApiResponse => {
   const password = interaction.getString("password");
   const username = interaction.getUser("username")?.username;
   const discordId = interaction.getUser("username")?.id;
