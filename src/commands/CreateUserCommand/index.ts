@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteractionOptionResolver } from "discord.js";
-import { inserUserIntoDb } from "../../DbActions";
-import { UserData } from "../../types";
+import { inserUserIntoDb } from "@db/Users";
+import { UserData } from "@/types";
 
 export const registerUserCommand = new SlashCommandBuilder()
   .setName("register")

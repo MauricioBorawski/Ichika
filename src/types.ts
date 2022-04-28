@@ -15,3 +15,5 @@ export interface UserData {
   password: string;
   discordId: string;
 }
+
+export const dbPath = __dirname + "/../db.json";

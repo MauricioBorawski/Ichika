@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteractionOptionResolver } from "discord.js";
-import { insertNoteIntoDb } from "../../DbActions";
+import { insertNoteIntoDb } from "@db/Notes";
 
 export const createNoteCommand = new SlashCommandBuilder()
   .setName("create")

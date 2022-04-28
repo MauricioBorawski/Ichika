@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { getNotesFromDb } from "../../DbActions";
+import { getNotesFromDb } from "@db/Notes";
 
 export const getNoteCommand = new SlashCommandBuilder()
   .setName("notes")
