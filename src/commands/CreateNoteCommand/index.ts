@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
 import { insertNoteIntoDb } from "../../DataBaseActions/Notes";
-import { ApiResponse, Note } from "@/types";
+import { CommandResponseSuccess, Note } from "@/types";
 
 export const createNoteCommand = new SlashCommandBuilder()
   .setName("create")
@@ -10,7 +10,7 @@ export const createNoteCommand = new SlashCommandBuilder()
     option.setName("create").setDescription("note:").setRequired(true)
   );
 
-export const createNote = (interaction: CommandInteraction): ApiResponse => {
+export const createNote = (interaction: CommandInteraction): CommandResponseSuccess => {
   const userInput = interaction.options.getString("create");
   const userId = interaction.member?.user.id;
 

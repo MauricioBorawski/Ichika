@@ -22,7 +22,14 @@ export interface DataBase {
   users: User[];
 }
 
-export interface ApiResponse {
+export interface CommandResponseSuccess {
   content: string;
   ephemeral: boolean;
 }
+
+export interface CommandResposeFailure {
+  content: string;
+  ephemeral: boolean;
+}
+
+export type CommandResponse = CommandResponseSuccess | CommandResposeFailure;

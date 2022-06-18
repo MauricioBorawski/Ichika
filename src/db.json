@@ -1,8 +1,5 @@
 {
-  "notes": [
-    { "id": 0, "note": "jeor joer", "userId": "317136714168795137" },
-    { "id": 1, "note": "holi", "userId": "314589646891778060" }
-  ],
+  "notes": [{ "id": 0, "note": "jeor joer", "userId": "317136714168795137" }],
   "users": [
     {
       "id": 0,
