@@ -17,6 +17,12 @@ export interface UserData {
   discordId: string;
 }
 
+export interface UserDataGetter {
+  id: number;
+  userName: string;
+  discordId: string;
+}
+
 export interface DataBase {
   notes: Note[];
   users: User[];
