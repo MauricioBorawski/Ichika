@@ -1,5 +1,5 @@
 import { UserDataGetter } from "@/types";
-import { client } from "./dataBase";
+import { client } from ".";
 
 export const getUsers = async () => {
   client.connect((err) => {

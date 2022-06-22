@@ -39,3 +39,5 @@ export interface CommandResposeFailure {
 }
 
 export type CommandResponse = CommandResponseSuccess | CommandResposeFailure;
+
+export type CollectionName = "users" | "notes";

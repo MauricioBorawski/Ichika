@@ -44,6 +44,5 @@ export const respondInteraction = (interaction: Interaction) => {
 
   const { commandName } = interaction;
 
-  if (isCommand(commandName))
-    interaction.reply(responses[commandName].response(interaction));
+  if (isCommand(commandName)) responses[commandName].response(interaction);
 };

@@ -1,5 +1,10 @@
 import { readFileSync, writeFileSync } from "fs";
+import { getCollection } from "../DataBase";
 import { User, UserData } from "../types";
+
+interface RegisterUserReturnType {
+  success: boolean;
+}
 
 export const dbPath = __dirname + "/../db.json";
 
@@ -21,3 +26,18 @@ export const inserUserIntoDb = (user: UserData | null) => {
 
   writeFileSync(__dirname + "/../db.json", JSON.stringify(entireDb));
 };
+
+/* Mongo Actions  */
+
+export async function registerUser(
+  user: UserData | null
+): Promise<RegisterUserReturnType> {
+  if (!user) throw Error("I am sorry but something happend. Please try again.");
+
+  try {
+    await getCollection("users").insertOne(user);
+    return { success: true };
+  } catch (error) {
+    throw Error("I am sorry but I couldn't register. Please try again.");
+  }
+}
