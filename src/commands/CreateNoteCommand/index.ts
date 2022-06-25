@@ -1,27 +1,39 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { insertNoteIntoDb } from "../../DataBaseActions/Notes";
-import { CommandResponseSuccess, Note } from "@/types";
+import { registerNewNote } from "../../DataBaseActions/Notes";
 
 export const createNoteCommand = new SlashCommandBuilder()
   .setName("create")
-  .setDescription("Create a new note.")
+  .setDescription("Create a new note")
   .addStringOption((option) =>
-    option.setName("create").setDescription("note:").setRequired(true)
+    option.setName("note").setDescription("Insert note").setRequired(true)
   );
 
-export const createNote = (interaction: CommandInteraction): CommandResponseSuccess => {
-  const userInput = interaction.options.getString("create");
+export const createNote = (interaction: CommandInteraction) => {
+  const userInput = interaction.options.getString("note");
   const userId = interaction.member?.user.id;
 
-  if (!userInput || !userId) throw Error("There was an unexpeted error");
+  if (!userInput || !userId) {
+    interaction.reply({
+      embeds: [
+        {
+          description: `There was an error with the input of the note. Please try again.`,
+          color: "RED",
+        },
+      ],
+      ephemeral: true,
+    });
 
-  const generatedNote: Pick<Note, "note" | "userId"> = {
+    return;
+  }
+
+  registerNewNote({
     note: userInput,
     userId: userId,
-  };
-
-  insertNoteIntoDb(generatedNote);
-
-  return { content: "Note created", ephemeral: true };
+  }).then(() => {
+    interaction.reply({
+      ephemeral: true,
+      embeds: [{ color: "GREEN", description: "Note succesfuly created" }],
+    });
+  });
 };

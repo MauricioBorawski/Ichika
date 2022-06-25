@@ -1,8 +1,11 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
 import { registerUser } from "../../DataBaseActions/Users";
-import { CommandResponseSuccess } from "@/types";
-import { isNativeError } from "util/types";
+import { formatDate } from "./utils";
+
+
+// TODO Add validation for password
+// TODO Add security for password
 
 export const registerUserCommand = new SlashCommandBuilder()
   .setName("register")
@@ -20,6 +23,11 @@ export const registerUserCommand = new SlashCommandBuilder()
       .setRequired(true)
   );
 
+/**
+ * RegisterCommand is a function that takes a CommandInteraction as a parameter and returns nothing.
+ * @param {CommandInteraction} interaction - CommandInteraction
+ * @returns a promise.
+ */
 export const registerCommand = (interaction: CommandInteraction) => {
   const password = interaction.options.getString("password");
   const username = interaction.options.getUser("username")?.username;
@@ -34,22 +42,23 @@ export const registerCommand = (interaction: CommandInteraction) => {
     return;
   }
 
-  registerUser({ username, discordId, password })
-    .then((res) => {
-      if (!isNativeError(res)) return res;
-    })
+  registerUser({ username, password, discordId })
     .then(() => {
       interaction.reply({
         content: "Your register has been completed. Thanks for the register.",
         ephemeral: true,
       });
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       interaction.reply({
-        content:
-          "I am sorry but I couldn't complete the register. Please try again.",
         ephemeral: true,
+        embeds: [{ color: "RED", description: err.message }],
       });
-      console.log(err);
+
+      console.error({
+        description: `Register user error`,
+        discordId: `${discordId}`,
+        time: formatDate(new Date()),
+      });
     });
 };

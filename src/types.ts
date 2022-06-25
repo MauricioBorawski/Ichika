@@ -1,5 +1,4 @@
 export interface Note {
-  id: number;
   note: string;
   userId: string;
 }
@@ -9,6 +8,7 @@ export interface User {
   userName: string;
   discordId: string;
   password: string;
+  enabled: boolean;
 }
 
 export interface UserData {
