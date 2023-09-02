@@ -1,0 +1,9 @@
+{
+  "name": "Ichika",
+  "version": "1.0.0",
+  "description": "Open source bot for discord",
+  "main": "index.js",
+  "repository": "https://github.com/MauricioBorawski/Ichika.git",
+  "author": "Mauricio Borawski <mauricio.borawski@gmail.com>",
+  "license": "MIT"
+}
